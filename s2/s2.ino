@@ -10,8 +10,8 @@ const String PASS = "8120gv08";
 const int PORT = 1883;
 const String URL = "test.mosquitto.org";
 const String TOPIC = "DSM2";
-const String broker_user = "adnre"; 
-const String broker_pass = "ada"; 
+const String broker_user = ""; 
+const String broker_pass = ""; 
 
 void setup() {
   Serial.begin(115200);
@@ -35,6 +35,11 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  String mensagem = "Labubu: ";
+  mensagem += "oi";
+
+  mqtt.publish(TOPIC.c_str(), mensagem.c_str());
+  mqtt.loop();
+  delay(2000);
 
 }
