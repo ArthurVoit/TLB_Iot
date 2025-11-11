@@ -1,8 +1,6 @@
 #include <WiFiClientSecure.h>
 #include <PubSubClient.h>
 #include <dht11.h>
-#include  
-#define DHT11PIN 14
 dht11 DHT11;
 WiFiClientSecure client;
 PubSubClient mqtt(client);
@@ -26,9 +24,7 @@ const String OtherTopic = "chat";
 //sensores
 
   //ultrassonico(P1)
-    const int trigPin = 22;
-    const int echoPin = 23;
-    float duration, distance;
+
   //Temperatura & umidade
 
   //luminosidade
@@ -39,7 +35,6 @@ const String OtherTopic = "chat";
 void setup() {
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin,  INPUT);
-  dht.begin();
 
   Serial.begin(115200);
   Serial.println("Conectando ao Wifi");
@@ -65,20 +60,7 @@ void setup() {
   pinMode(2, OUTPUT);
 }
 
- float ultrassonico(){
-  digitalWrite(trigPin, LOW);  
-	delayMicroseconds(2);  
-	digitalWrite(trigPin, HIGH);  
-	delayMicroseconds(10);  
-	digitalWrite(trigPin, LOW);  
-  float duration = pulseIn(echoPin, HIGH);
-  float distance = (duration*0.0343)/2;
-  if(distance>2){
-    return false;
-  } else{
-    return true;
-  }
-}
+
  
 
 void loop() {
