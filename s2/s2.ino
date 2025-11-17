@@ -1,13 +1,13 @@
-#include <WiFi.h>
+#include <WiFiClientSecure.h>
 #include <PubSubClient.h>
 
-WiFiClient client;
+WiFiClientSecure client;
 PubSubClient mqtt(client);
 
 const String SSID = "FIESC_IOT_EDU";
 const String PASS = "8120gv08";
 
-const int PORT = 1883;
+const int PORT = 8883;
 const String URL = "test.mosquitto.org";
 const String broker_user = ""; 
 const String broker_pass = ""; 
@@ -23,6 +23,7 @@ void setup() {
     delay(200);
   }
   Serial.println("\nConectado!");
+  client.setInsecure();
   Serial.println("Conectando ao Broker...");
   mqtt.setServer(URL.c_str(), PORT);
   while(!mqtt.connected()){
@@ -36,7 +37,25 @@ void setup() {
   mqtt.setCallback(callback);
   Serial.println("\n Conectado ao broker com sucesso!");
   pinMode(2, OUTPUT);
+  pinMode(TRIGGER_PIN, OUTPUT); 
+  pinMode(ECHO_PIN, INPUT); 
+  pinMode(LED_ILUMI, INPUT);
 }
+
+int P2 (){
+  digitalWrite(TRIGGER_PIN, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(TRIGGER_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIGGER_PIN, LOW);
+
+  long duracao = pulseIn(ECHO_PIN, HIGH);
+  int distanciaCm = duracao * 0.034 /2;
+  return distanciaCm;
+}
+
+int dia_noite (int )
 
 void loop() {
   String mensagem = "Andre: ";
