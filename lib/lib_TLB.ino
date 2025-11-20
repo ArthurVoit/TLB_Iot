@@ -1,8 +1,6 @@
 #include <WiFiClientSecure.h>
 #include <PubSubClient.h>
-#include "libsla.h"
-#include <dht11.h>
-#define DHTTYPE DHT11
+#include "lib_TLB.h"
 DHT dht(DHTPIN, DHTTYPE);
 
 void Vermelho()
@@ -112,7 +110,7 @@ void temp()
   }
 }
 
-void status(String SSID, String PASS, String ID, String PORT)
+void status_connection(String SSID,String PASS, String PORT)
 {
   Serial.println("Conectando ao Wifi");
   WiFi.begin(SSID, PASS);
@@ -137,8 +135,6 @@ void status(String SSID, String PASS, String ID, String PORT)
     Serial.print(".");
     Azul();
   }
-  mqtt.subscribe(MyTopic.c_str());
-  mqtt.setCallback(callback);
   Serial.println("\n Conectado ao broker com sucesso!");
   Verde();
   delay(5000);

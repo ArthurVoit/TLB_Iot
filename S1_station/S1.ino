@@ -1,5 +1,6 @@
 #include <WiFiClientSecure.h>
 #include <PubSubClient.h>
+#include "lib_TLB.h"
 #include <dht11.h>
 dht11 DHT11;
 WiFiClientSecure client;
@@ -18,46 +19,20 @@ const String broker_user = "Sensor1";
 const String broker_pass = "Senha321"; 
 
 //Tópicos
-const String MyTopic = "S1";
-const String OtherTopic = "chat";
-
-//sensores
-
-  //ultrassonico(P1)
-
-  //Temperatura & umidade
-
-  //luminosidade
-    const int LED    = 19;
-    const int ldrPin = 34;
+const String S1_ilumi = "S1/ilumi";
+const String S1_temp = "S1/temp";
+const String S1_umi = "S1/umi";
+const String S2_P1_topic = "S2/P1";
   
 
 void setup() {
-  pinMode(trigPin, OUTPUT);
-  pinMode(echoPin,  INPUT);
-
   Serial.begin(115200);
-  Serial.println("Conectando ao Wifi");
-  WiFi.begin(SSID, PASS);
-  while(WiFi.status() != WL_CONNECTED){
-    Serial.print(".");
-    delay(200);
-  }
-  Serial.println("\nConectado!");
-  client.setInsecure();
-  Serial.println("Conectando ao Broker...");
-  mqtt.setServer(URL.c_str(), PORT);
-  while(!mqtt.connected()){
-    String ID = "S1-";
-    ID += String(random(0xffff), HEX);
-    mqtt.connect(ID.c_str(), broker_user.c_str(), broker_pass.c_str());
-    delay(200);
-    Serial.print(".");
-  }
-  mqtt.subscribe(MyTopic.c_str());
-  mqtt.setCallback(callback);
-  Serial.println("\n Conectado ao broker com sucesso!");
-  pinMode(2, OUTPUT);
+  status_connection(SSID, PASS, PORT); 
+  mqtt.subscribe(S1_ilumi.c_str());
+  pinMode(TRIG_PIN, OUTPUT); 
+  pinMode(ECHO_PIN, INPUT); 
+  pinMode(LED, INPUT);
+  pinMode(LDR, INPUT);
 }
 
 
