@@ -16,14 +16,8 @@
 DHT dht(DHTPIN, DHTTYPE);
 void Vermelho();
 void Verde();
-void Branco();
-void Magenta();
-void Amarelo();
-void Ciano();
+void Azul();
 void Desligado();
 int ultrassonico();
-void luz();
-void umidade();
-void temp();
 void status_connection(String SSID, String PASS, String PORT);
 #endif

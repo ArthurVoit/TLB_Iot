@@ -34,8 +34,7 @@ void setup() {
 
 void loop() {
   float dadoSensor1 = ultrassonico();
-  String mensagem = "S3/P1: "  + String(dadoSensor1, 2);
-  mqtt.publish(S3_P1_topic.c_str(), mensagem.c_str());
+  mqtt.publish(S3_P1_topic.c_str(), String(dadoSensor1).c_str());
 
   mqtt.loop();
   delay(1000);

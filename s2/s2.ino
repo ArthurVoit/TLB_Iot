@@ -28,14 +28,12 @@ void setup() {
 
 void loop() {
   float dadoSensor1 = ultrassonico();
-  String mensagem = "S2/P1: "  + String(dadoSensor1, 2);
-  mqtt.publish(S2_P1_topic.c_str(), mensagem.c_str());
+  mqtt.publish(S2_P1_topic.c_str(), String(dadoSensor1).c_str());
 
   float dadoSensor2 = ultrassonico();
-  mensagem = "S2/P1: "  + String(dadoSensor2, 2);
-  mqtt.publish(S2_P2_topic.c_str(), mensagem.c_str());
+  mqtt.publish(S2_P2_topic.c_str(), String(dadoSensor2).c_str());
 
   mqtt.loop();
-  delay(1000);
+  delay(5000);
 
 }

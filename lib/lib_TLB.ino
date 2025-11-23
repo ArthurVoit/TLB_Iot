@@ -15,28 +15,6 @@ void Azul()
 {
   digitalWrite(RGBb, 255);
 } 
-void Branco()
-{
-  digitalWrite(RGBr, 255);
-  digitalWrite(RGBg, 255);
-  digitalWrite(RGBb, 255);
-} 
-void Magenta()
-{
-  digitalWrite(RGBr, 255);
-  digitalWrite(RGBb, 255);
-} 
-void Amarelo()
-{
-  digitalWrite(RGBr, 255);
-  digitalWrite(RGBg, 255);
-  digitalWrite(RGBb, 255);
-}
-void Ciano()
-{
-  digitalWrite(RGBg, 255);
-  digitalWrite(RGBb, 255);
-}
 void Desligado()
 {
   digitalWrite(RGBr, 0);
@@ -60,53 +38,6 @@ int ultrassonico()
   else
   {
     return 1;
-  }
-}
-void luz()
-{
-  int value = analogRead(LDR);
-
-  Serial.println("Analog  Value: ");
-  Serial.println(value);
-
-  if (value > 450)
-  {
-    digitalWrite(LED, LOW);
-  }
-  else
-  {
-    digitalWrite(LED, HIGH);
-  }
-
-  delay(250);
-}
-
-void umidade()
-{
-  float h = dht.readHumidity();
-  if (isnan(h))
-  {
-    Serial.println("Failed to read from DHT");
-  }
-  else
-  {
-    Serial.print("Umidade: ");
-    Serial.print(h);
-    Serial.print(" %t");
-  }
-}
-void temp()
-{
-  float t = dht.readTemperature();
-  if (isnan(t))
-  {
-    Serial.println("Failed to read from DHT");
-  }
-  else
-  {
-    Serial.print("Temperatura: ");
-    Serial.print(t);
-    Serial.println(" *C");
   }
 }
 
