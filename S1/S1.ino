@@ -20,7 +20,7 @@ const String S1_P1_topic = "S1/P1";
   
 void setup() {
   Serial.begin(115200);
-  status_connection(SSID, PASS, PORT, URL); 
+  status_connection(client, mqtt, SSID, PASS, PORT, URL, ID); 
   mqtt.subscribe(S1_ilumi.c_str());
   pinMode(TRIG_PIN, OUTPUT); 
   pinMode(ECHO_PIN, INPUT); 
@@ -33,7 +33,7 @@ void setup() {
 }
 
 void loop() {
-  float dadoSensor1 = ultrassonico();
+  float dadoSensor1 = status_ultrassonico();
   float temperatura = dht.readTemperature();
   float umidade = dht.readHumidity();
   int luminosidade = analogRead(LDR);

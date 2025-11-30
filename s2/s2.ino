@@ -31,7 +31,7 @@ void callback(char* topic, byte* payload, unsigned int length){
 void setup() {
   Serial.begin(115200);
   mqtt.setCallback(callback);
-  status_connection(SSID, PASS, PORT, URL, ID); 
+  status_connection(client, mqtt, SSID, PASS, PORT, URL, ID); 
   mqtt.subscribe(S1_ilumi.c_str());
   pinMode(TRIG_PIN, OUTPUT); 
   pinMode(ECHO_PIN, INPUT); 
@@ -43,10 +43,10 @@ void setup() {
 }
 
 void loop() {
-  float dadoSensor1 = ultrassonico();
+  float dadoSensor1 = status_ultrassonico();
   mqtt.publish(S2_P1_topic.c_str(), String(dadoSensor1).c_str());
 
-  float dadoSensor2 = ultrassonico();
+  float dadoSensor2 = status_ultrassonico();
   mqtt.publish(S2_P2_topic.c_str(), String(dadoSensor2).c_str());
 
   mqtt.loop();

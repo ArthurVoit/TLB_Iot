@@ -41,7 +41,7 @@ int status_ultrassonico()
   }
 }
 
-void status_connection(String SSID,String PASS, String PORT, String URL, String ID)
+void status_connection(WiFiClientSecure &client, PubSubClient &mqtt, String SSID,String PASS, String PORT, String URL, String ID)
 {
   Serial.println("Conectando ao Wifi");
   WiFi.begin(SSID, PASS);

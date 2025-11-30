@@ -19,6 +19,6 @@ void Vermelho();
 void Verde();
 void Azul();
 void Desligado();
-int ultrassonico();
-void status_connection(String SSID, String PASS, String PORT, String URL, String ID);
+int status_ultrassonico();
+void status_connection(WiFiClientSecure &client, PubSubClient &mqtt, String SSID, String PASS, String PORT, String URL, String ID);
 #endif

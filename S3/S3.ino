@@ -32,20 +32,23 @@ void callback(char* topic, byte* payload, unsigned int length){
 void setup() {
   Serial.begin(115200);
   mqtt.setCallback(callback);
-  status_connection(SSID, PASS, PORT, URL, ID);
+  status_connection(client, mqtt, SSID, PASS, PORT, URL, ID);
   mqtt.subscribe(S2_P1_topic.c_str());
   mqtt.subscribe(S2_P2_topic.c_str());
   mqtt.subscribe(S1_ilumi.c_str());
   mqtt.subscribe(S3_P1_topic.c_str());
   pinMode(TRIG_PIN, OUTPUT); 
   pinMode(ECHO_PIN, INPUT); 
-  pinMode(LED, INPUT);
+  pinMode(LED, OUTPUT);
+  pinMode(RGBr, OUTPUT);
+  pinMode(RGBg, OUTPUT);
+  pinMode(RGBb, OUTPUT);
   pinMode(LDR, INPUT);
   digitalWrite(LED, LOW);
 }
 
 void loop() {
-  float dadoSensor1 = ultrassonico();
+  float dadoSensor1 = status_ultrassonico();
   mqtt.publish(S3_P1_topic.c_str(), String(dadoSensor1).c_str());
 
   mqtt.loop();

@@ -18,20 +18,6 @@ const String broker_pass = "";
 
 const String trem_TLB = "trem_TLB"; 
 
-void setup() {
-  status_connection(SSID, PASS, PORT, URL, ID);
-  mqtt.subscribe(trem_TLB.c_str());
-  mqtt.setCallback(callback);
-  pinMode(RGBr, OUTPUT);
-  pinMode(RGBg, OUTPUT);
-  pinMode(RGBb, OUTPUT);
-
-}
-
-void loop() {
-  mqtt.loop();
-}
-
 void callback(char* topic, byte* payload, unsigned int length){
   String mensagem = "";
   for(int i = 0; i < length; i++){
@@ -43,14 +29,27 @@ void callback(char* topic, byte* payload, unsigned int length){
   int msg = mensagem.toInt();
 
   if (msg > 0){
-    digitalWrite(ledVerde, HIGH);
-    digitalWrite(ledVermelho, LOW);
+    Desligado();
+    Verde();
   } else if(msg < 0){
-    digitalWrite(ledVerde, LOW);
-    digitalWrite(ledVermelho, HIGH);
+    Desligado();
+    Vermelho();
   } else{
-    digitalWrite(ledVerde, LOW);
-    digitalWrite(ledVermelho, LOW);
+    Desligado();
   }
 
+}
+
+void setup() {
+  status_connection(client, mqtt, SSID, PASS, PORT, URL, ID);
+  mqtt.subscribe(trem_TLB.c_str());
+  mqtt.setCallback(callback);
+  pinMode(RGBr, OUTPUT);
+  pinMode(RGBg, OUTPUT);
+  pinMode(RGBb, OUTPUT);
+
+}
+
+void loop() {
+  mqtt.loop();
 }
