@@ -22,14 +22,14 @@ void Desligado()
   digitalWrite(RGBb, 0);
 } 
 
-int ultrassonico()
+int status_ultrassonico()
 {
-  digitalWrite(trigPin, LOW);
+  digitalWrite(TRIG_PIN, LOW);
   delayMicroseconds(2);
-  digitalWrite(trigPin, HIGH);
+  digitalWrite(TRIG_PIN, HIGH);
   delayMicroseconds(10);
-  digitalWrite(trigPin, LOW);
-  float duration = pulseIn(echoPin, HIGH);
+  digitalWrite(TRIG_PIN, LOW);
+  float duration = pulseIn(ECHO_PIN, HIGH);
   float distance = (duration * 0.0343) / 2;
   if (distance > 2)
   {
@@ -41,7 +41,7 @@ int ultrassonico()
   }
 }
 
-void status_connection(String SSID,String PASS, String PORT)
+void status_connection(String SSID,String PASS, String PORT, String URL, String ID)
 {
   Serial.println("Conectando ao Wifi");
   WiFi.begin(SSID, PASS);
@@ -51,13 +51,14 @@ void status_connection(String SSID,String PASS, String PORT)
     delay(200);
     Azul();
   }
+  Desligado();
   Verde();
   delay(5000);
   Serial.println("\nConectado!");
   client.setInsecure();
   Serial.println("Conectando ao Broker...");
-  mqtt.setServer(URL.c_str(), PORT);
-  Desliga();
+  mqtt.setServer(URL.c_str(), PORT.toInt());
+  Desligado();
   while (!mqtt.connected())
   {
     ID += String(random(0xffff), HEX);
