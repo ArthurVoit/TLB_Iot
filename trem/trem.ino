@@ -1,6 +1,3 @@
-#include <WiFiClientSecure.h>
-#include <WiFi.h>
-#include <PubSubClient.h>
 #include "lib_TLB.h"
 
 WiFiClientSecure client;            
@@ -41,7 +38,7 @@ void callback(char* topic, byte* payload, unsigned int length){
 }
 
 void setup() {
-  status_connection(client, mqtt, SSID, PASS, PORT, URL, ID);
+  status_connection();
   mqtt.subscribe(trem_TLB.c_str());
   mqtt.setCallback(callback);
   pinMode(RGBr, OUTPUT);
@@ -52,4 +49,5 @@ void setup() {
 
 void loop() {
   mqtt.loop();
+  delay(1000);
 }

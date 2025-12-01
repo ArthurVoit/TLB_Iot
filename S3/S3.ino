@@ -1,8 +1,6 @@
-#include <WiFi.h>
-#include <PubSubClient.h>
 #include "lib_TLB.h"
 
-WiFiClient client;
+WiFiClientSecure client;
 PubSubClient mqtt(client);
 
 const String SSID = "FIESC_IOT_EDU";
@@ -12,9 +10,9 @@ const String ID = "TLB_S3";
 const int PORT           = 1883;
 const String URL         = "ee5258c8dbff40548769fe4dd31022ab.s1.eu.hivemq.cloud";
 const String S1_ilumi = "S1/ilumi";
-const String S2_P1_topic = "S2/P1";
-const String S2_P2_topic = "S2/P2";
-const String S3_P1_topic = "S3/P1";
+const String S2_P1 = "S2/P1";
+const String S2_P2 = "S2/P2";
+const String S3_P1 = "S3/P1";
 const String broker_user = "";
 const String broker_pass = "";
 
@@ -32,7 +30,7 @@ void callback(char* topic, byte* payload, unsigned int length){
 void setup() {
   Serial.begin(115200);
   mqtt.setCallback(callback);
-  status_connection(client, mqtt, SSID, PASS, PORT, URL, ID);
+  status_connection();
   mqtt.subscribe(S2_P1_topic.c_str());
   mqtt.subscribe(S2_P2_topic.c_str());
   mqtt.subscribe(S1_ilumi.c_str());
@@ -48,7 +46,7 @@ void setup() {
 }
 
 void loop() {
-  float dadoSensor1 = status_ultrassonico();
+  float dadoSensor1 = status_ultrassonico(TRIG_PIN, ECHO_PIN);
   mqtt.publish(S3_P1_topic.c_str(), String(dadoSensor1).c_str());
 
   mqtt.loop();

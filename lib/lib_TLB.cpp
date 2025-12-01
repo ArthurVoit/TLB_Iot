@@ -1,37 +1,36 @@
-#include <WiFiClientSecure.h>
-#include <PubSubClient.h>
 #include "lib_TLB.h"
+#include <DHT.h>
 DHT dht(DHTPIN, DHTTYPE);
 
 void Vermelho()
 {
-  digitalWrite(RGBr, 255);
+  analogWrite(RGBr, 255);
 } 
 void Verde()
 {
-  digitalWrite(RGBg, 255);
+  analogWrite(RGBg, 255);
 } 
 void Azul()
 {
-  digitalWrite(RGBb, 255);
+  analogWrite(RGBb, 255);
 } 
 void Desligado()
 {
-  digitalWrite(RGBr, 0);
-  digitalWrite(RGBg, 0);
-  digitalWrite(RGBb, 0);
+  analogWrite(RGBr, 0);
+  analogWrite(RGBg, 0);
+  analogWrite(RGBb, 0);
 } 
 
-int status_ultrassonico()
+int status_ultrassonico(const int trigPin, const int echoPin)
 {
-  digitalWrite(TRIG_PIN, LOW);
+  digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
-  digitalWrite(TRIG_PIN, HIGH);
+  digitalWrite(trigPin, HIGH);
   delayMicroseconds(10);
-  digitalWrite(TRIG_PIN, LOW);
-  float duration = pulseIn(ECHO_PIN, HIGH);
+  digitalWrite(trigPin, LOW);
+  float duration = pulseIn(echoPin, HIGH);
   float distance = (duration * 0.0343) / 2;
-  if (distance > 2)
+  if (distance >= 5)
   {
     return 0;
   }
@@ -41,7 +40,7 @@ int status_ultrassonico()
   }
 }
 
-void status_connection(WiFiClientSecure &client, PubSubClient &mqtt, String SSID,String PASS, String PORT, String URL, String ID)
+void status_connection()
 {
   Serial.println("Conectando ao Wifi");
   WiFi.begin(SSID, PASS);
@@ -53,7 +52,7 @@ void status_connection(WiFiClientSecure &client, PubSubClient &mqtt, String SSID
   }
   Desligado();
   Verde();
-  delay(5000);
+  delay(1000);
   Serial.println("\nConectado!");
   client.setInsecure();
   Serial.println("Conectando ao Broker...");
